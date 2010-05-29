@@ -37,5 +37,5 @@ class Incident(models.Model):
     author = models.ForeignKey(User)
     responsibles = models.ManyToManyField(User, related_name='respons')
 
-
+#fgfdg
 admin.site.register(Incident)
