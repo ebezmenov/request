@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load mytags%}
+{% block content %}
+<p>Title: {{ incident.title }}</p>
+{% cal %}
+<table>{{ form }}</table>
+
+{% endblock %}

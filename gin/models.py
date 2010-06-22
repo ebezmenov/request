@@ -1,6 +1,14 @@
+#-*- coding: utf-8 -*-
 from django.db import models
+from django.forms import ModelForm
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.db.models import permalink
+
+STATUS_CHOICES = (('1','New'),
+    ('2','Close'),
+    ('3','В работе'),
+)
 
 # Create your models here.
 class BlogPost(models.Model):
@@ -36,6 +44,21 @@ class Incident(models.Model):
     client = models.ForeignKey(Client)
     author = models.ForeignKey(User)
     responsibles = models.ManyToManyField(User, related_name='respons')
+    status = models.CharField(max_length=1,choices=STATUS_CHOICES, default='1')
+    class Meta:
+        permissions = (
+        ("can_view_all","могут видеть все"),
+        )
+
+    def __unicode__(self):
+        return self.title
+    @permalink
+    def get_absolute_url(self):
+        return ('incident_view',[str(self.id)])
+
+class FormIncident(ModelForm):
+    class Meta:
+        model = Incident
 
 #fgfdg
 admin.site.register(Incident)
