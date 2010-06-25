@@ -15,6 +15,7 @@
         <td><a href="{{ incident.get_absolute_url }}">{{ incident.id }}</a></td>
         <td>{{ incident.title }}</td>
         <td>{{ incident.author }}</td>
+        <td>{{ incident.get_list_resp }}         </td>
         <td>{{ incident.timestamp|date }}</td>
         </tr>
       {% endfor %}

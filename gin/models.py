@@ -55,6 +55,9 @@ class Incident(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('incident_view',[str(self.id)])
+    
+    def get_list_resp(self):
+        return self.responsibles.all()
 
 class FormIncident(ModelForm):
     class Meta:

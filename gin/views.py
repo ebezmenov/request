@@ -3,7 +3,8 @@ from django.template import loader, Context, RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from hcb.gin.models import BlogPost, Incident, FormIncident
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
+from django.db.models import Q
 # Create your views here.
 
 def user_is_staff(user):
@@ -14,10 +15,17 @@ def archive(request):
     t = loader.get_template('archive.html')
     c = Context({'posts': posts})
     return HttpResponse(t.render(c))
+
+@login_required
 def index(request):
-    #incidents = Incident.objects.all()
-    incidents = Incident.objects.filter(author = request.user)
+    #all_incidents = Incident.objects.all()
+    incidents = Incident.objects.filter(Q(responsibles = request.user)|Q(author = request.user)).distinct()
+    if not request.user.is_staff:
+        incidents = incidents.filter(author = request.user)
+    if request.user.has_perm('gin.can_view_all'):
+        incidents = Incident.objects.all()
     return render_to_response("index.html", {'incidents': incidents}, context_instance=RequestContext(request))
+
 @user_passes_test(user_is_staff)
 def add_incident(request):
     """Создает новый инцидент"""
