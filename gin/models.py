@@ -34,6 +34,9 @@ admin.site.register(EmployeeProfile,EmployeeProfileAdmin)
 class Client(models.Model):
     first = models.CharField(max_length=50)
     last = models.CharField(max_length=50)
+    def __str__(self):
+        return self.first+" "+self.last
+    
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('first','last')
 admin.site.register(Client, ClientAdmin)
