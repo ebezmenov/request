@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db.models import permalink
+from datetime import datetime
 
 STATUS_CHOICES = (('1','New'),
     ('2','Close'),
@@ -42,7 +43,7 @@ class ClientAdmin(admin.ModelAdmin):
 admin.site.register(Client, ClientAdmin)
 
 class Incident(models.Model):
-    timestamp = models.DateField()
+    timestamp = models.DateField(default=datetime.today())
     title = models.CharField(max_length=50)
     client = models.ForeignKey(Client)
     author = models.ForeignKey(User)
@@ -63,8 +64,9 @@ class Incident(models.Model):
         return self.responsibles.all()
 
 class FormIncident(ModelForm):
-    class Meta:
+     class Meta:
         model = Incident
+        exclude = ('author',)
 
 #fgfdg
 admin.site.register(Incident)

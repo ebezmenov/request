@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.template import loader, Context, RequestContext
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, HttpResponseRedirect
 from hcb.gin.models import BlogPost, Incident, FormIncident
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.db.models import Q
@@ -30,6 +30,20 @@ def index(request):
 def add_incident(request):
     """Создает новый инцидент"""
     pass
+
+def new_incident(request):
+    if request.method == 'POST':
+        form=FormIncident(request.POST)
+        if form.is_valid():
+            new_incident = form.save(commit=False)
+            new_incident.author = request.user
+            new_incident.save()
+            return HttpResponseRedirect(reverse('list_inc'))
+    else:
+        form = FormIncident(initial={'title':'название темы'})
+    #form.author = request.user
+    return render_to_response("new_inc.html", {'form':form}, context_instance=RequestContext(request))
+
 def list_incident(request):
     pass
 @user_passes_test(user_is_staff)
