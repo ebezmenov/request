@@ -66,7 +66,7 @@ class Incident(models.Model):
 class FormIncident(ModelForm):
      class Meta:
         model = Incident
-        exclude = ('author',)
+        exclude = ('author','timestamp',)
 
 #fgfdg
 admin.site.register(Incident)
