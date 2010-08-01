@@ -43,7 +43,7 @@ class ClientAdmin(admin.ModelAdmin):
 admin.site.register(Client, ClientAdmin)
 
 class Incident(models.Model):
-    timestamp = models.DateField(default=datetime.today())
+    timestamp = models.DateField(auto_now_add = True )
     title = models.CharField(max_length=50)
     client = models.ForeignKey(Client)
     author = models.ForeignKey(User)

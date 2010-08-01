@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.template import loader, Context, RequestContext
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from hcb.gin.models import BlogPost, Incident, FormIncident
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -38,6 +39,7 @@ def new_incident(request):
             new_incident = form.save(commit=False)
             new_incident.author = request.user
             new_incident.save()
+            form.save_m2m()
             return HttpResponseRedirect(reverse('list_inc'))
     else:
         form = FormIncident(initial={'title':'название темы'})
