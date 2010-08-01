@@ -12,9 +12,19 @@ and open the template in the editor.
       body { color:#efd; background:#453; padding: 0 5em; margin: 0}
       h1 { padding: 2em 3em; background:#675}
       h2 { color:#bf8; border-top: 1px dotted #eff; margin-top:2em; }
+      #menu { margin: 1em; }
+      a:hover { background:green; }
+      div a { color: red; padding: 1em;}
   </style>
   <body>
       <h1> HCB 'REQUEST'</h1>
+      hi {{ user.username }}
+      <div id="menu">
+          <a href="{% url add_inc %}">Создать новую заявку </a>
+          <a href="{% url new_incident %}">Создать новую заявку 2</a>
+          <a href="{% url list_inc %}">Журнал заявок</a>
+          <a href="{% url logout %}"> Выйти </a>
+      </div>
       {% block content %}
       {% endblock %}
   </body>
