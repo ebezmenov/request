@@ -39,18 +39,18 @@ def new_incident(request):
         form_client = ClientForm(request.POST)
         if form_client.is_valid():
             client = form_client.save()
-        if form.is_valid():
-            new_incident = form.save(commit=False)
-            new_incident.author = request.user
-            new_incident.client = client
-            new_incident.save()
-            form.save_m2m()
-            return HttpResponseRedirect(reverse('list_inc'))
+            if form.is_valid():
+                new_incident = form.save(commit=False)
+                new_incident.author = request.user
+                new_incident.client = client
+                new_incident.save()
+                form.save_m2m()
+                return HttpResponseRedirect(reverse('list_inc'))
     else:
         form = FormIncident(initial={'title':'название темы'})
         clientform = ClientForm()
     #form.author = request.user
-    return render_to_response("new_inc.html", {'form':form, 'form_client':clientform }, context_instance=RequestContext(request))
+    return render_to_response("new_inc.html", {'form':form, 'form_client':form_client }, context_instance=RequestContext(request))
 
 def list_incident(request):
     pass
