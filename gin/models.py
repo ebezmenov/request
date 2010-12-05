@@ -33,9 +33,9 @@ class EmployeeProfileAdmin(admin.ModelAdmin):
 admin.site.register(EmployeeProfile,EmployeeProfileAdmin)
 
 class Client(models.Model):
-    first = models.CharField(max_length=50)
-    last = models.CharField(max_length=50)
-    def __str__(self):
+    first = models.CharField('Имя',max_length=50)
+    last = models.CharField("Фамилия" ,max_length=50)
+    def __unicode__(self):
         return self.first+" "+self.last
     
 class ClientAdmin(admin.ModelAdmin):
@@ -43,7 +43,7 @@ class ClientAdmin(admin.ModelAdmin):
 admin.site.register(Client, ClientAdmin)
 
 class Incident(models.Model):
-    timestamp = models.DateField(auto_now_add = True )
+    timestamp = models.DateField(auto_now_add = True)
     title = models.CharField(max_length=50)
     client = models.ForeignKey(Client)
     author = models.ForeignKey(User)
@@ -66,7 +66,7 @@ class Incident(models.Model):
 class FormIncident(ModelForm):
      class Meta:
         model = Incident
-        exclude = ('author','timestamp',)
+        exclude = ('author','client', )
 
 #fgfdg
 admin.site.register(Incident)
