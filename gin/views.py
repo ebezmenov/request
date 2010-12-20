@@ -48,12 +48,18 @@ def new_incident(request):
                 return HttpResponseRedirect(reverse('list_inc'))
     else:
         form = FormIncident(initial={'title':'название темы'})
-        clientform = ClientForm()
+        form_client = ClientForm()
     #form.author = request.user
     return render_to_response("new_inc.html", {'form':form, 'form_client':form_client }, context_instance=RequestContext(request))
 
 def list_incident(request):
     pass
+@user_passes_test(user_is_staff)
+def incident_detail_view(request, incident_id):
+    incident = get_object_or_404(Incident, pk = incident_id )
+    form = FormIncident(instance=incident)
+    return render_to_response("view_detail.html", {'incident':incident, 'form':form },context_instance=RequestContext(request))
+
 @user_passes_test(user_is_staff)
 def incident_detail(request, incident_id):
     incident = get_object_or_404(Incident, pk = incident_id )

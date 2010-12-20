@@ -5,18 +5,19 @@
         <tr>
             <th>#</th>
             <th>Name</th>
-            <th>AuthoR</th>
+            <th>Автор</th>
+			<th>Отвественные<th>
             <th>Date</th>
         </tr>
     </thead>
     <tbody>
        {% for incident in incidents %}
         <tr>
-        <td><a href="{{ incident.get_absolute_url }}">{{ incident.id }}</a></td>
-        <td>{{ incident.title }}</td>
-        <td>{{ incident.author }}</td>
-        <td>{{ incident.get_list_resp }}         </td>
-        <td>{{ incident.timestamp|date }}</td>
+	        <td><a href="{{ incident.get_absolute_url }}">{{ incident.id }}</a></td>
+	        <td>{{ incident.title }}</td>
+	        <td>{{ incident.author }}</td>
+	        <td>{{ incident.get_list_resp }}         </td>
+	        <td>{{ incident.timestamp|date }}</td>
         </tr>
       {% endfor %}
     </tbody>

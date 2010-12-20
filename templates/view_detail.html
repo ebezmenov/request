@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load mytags%}
+{% block content %}
+<p>Title: {{ incident.title }}</p>
+{% cal %}
+Автор:{{ incident.author }}
+<form action="edit" method="" accept-charset="utf-8">
+	<p><input type="submit" value="Редактировать" /></p>
+</form>
+
+{% endblock %}
