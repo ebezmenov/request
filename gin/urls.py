@@ -8,7 +8,8 @@ urlpatterns = patterns('hcb.gin.views',
     url(r'^$', 'index', name = 'list_inc'),
     url(r'^archive/$', 'archive'),
     url(r'^list/$',object_list,{'queryset':Incident.objects.all(), 'template_name':'index.html'}),
-    url(r'incident/(\d+)/$','incident_detail',name='incident_view'),
+    url(r'incident/(\d+)/$','incident_detail_view',name='incident_detail'),
+    url(r'incident/(\d+)/edit$','incident_detail',name='incident_view'),
     url(r'new/$','new_incident', name='new_incident'),
 )
 info_dic = {'queryset': Incident.objects.all(), 'template_name':'list.html'}

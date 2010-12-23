@@ -1,1 +1,27 @@
-[{"pk": 3, "model": "gin.blogpost", "fields": {"body": "Hosses", "timestamp": "2010-05-29 00:45:38", "title": "Another else"}}, {"pk": 2, "model": "gin.blogpost", "fields": {"body": "\u0432\u0430\u0432\u0430\u0432", "timestamp": "2010-05-28 22:55:34", "title": "\u041f\u0443\u043a"}}, {"pk": 1, "model": "gin.blogpost", "fields": {"body": "\u0412\u0443\u043a\u0443\u043a\u0443\u043a\u0443\u043a", "timestamp": "2010-05-28 22:51:31", "title": "\u0412\u0443\u043a"}}, {"pk": 1, "model": "gin.employeeprofile", "fields": {"departament": "dfdf", "user": 1}}, {"pk": 2, "model": "gin.employeeprofile", "fields": {"departament": "tttt", "user": 2}}, {"pk": 1, "model": "gin.client", "fields": {"last": "Ivan", "first": "Ivanov"}}, {"pk": 2, "model": "gin.client", "fields": {"last": "Petr", "first": "Petrov"}}]
+[
+    {
+        "pk": 1, 
+        "model": "gin.client", 
+        "fields": {
+            "middle_name": "\u0424\u0435\u0434\u043e\u0440\u043e\u0432\u0438\u0447", 
+            "inn": "1111111111", 
+            "last": "\u0414\u0443\u043b\u0438\u043d", 
+            "first": "\u0418\u0432\u0430\u043d"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "gin.incident", 
+        "fields": {
+            "status": "1", 
+            "author": 1, 
+            "timestamp": "2010-12-20", 
+            "incoming_number": "\u0424-2", 
+            "client": 1, 
+            "title": "\u043d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u0442\u0435\u043c\u044b", 
+            "responsibles": [
+                1
+            ]
+        }
+    }
+]

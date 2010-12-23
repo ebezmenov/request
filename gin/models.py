@@ -35,6 +35,8 @@ admin.site.register(EmployeeProfile,EmployeeProfileAdmin)
 class Client(models.Model):
     first = models.CharField('Имя',max_length=50)
     last = models.CharField("Фамилия" ,max_length=50)
+    middle_name =models.CharField('Отчество', max_length=50) 
+    inn = models.DecimalField('INN', max_digits=10, decimal_places=0)
     def __unicode__(self):
         return self.first+" "+self.last
     
@@ -49,6 +51,7 @@ class Incident(models.Model):
     author = models.ForeignKey(User)
     responsibles = models.ManyToManyField(User, related_name='respons')
     status = models.CharField(max_length=1,choices=STATUS_CHOICES, default='1')
+    incoming_number = models.CharField('Входящий номер', max_length=20)
     class Meta:
         permissions = (
         ("can_view_all","могут видеть все"),
@@ -58,7 +61,7 @@ class Incident(models.Model):
         return self.title
     @permalink
     def get_absolute_url(self):
-        return ('incident_view',[str(self.id)])
+        return ('incident_detail',[str(self.id)])
     
     def get_list_resp(self):
         return self.responsibles.all()
@@ -66,7 +69,7 @@ class Incident(models.Model):
 class FormIncident(ModelForm):
      class Meta:
         model = Incident
-        exclude = ('author','client', )
+        exclude = ('author','client', 'status')
 
 #fgfdg
 admin.site.register(Incident)
