@@ -3,8 +3,15 @@
 {% block content %}
 <p>Title: {{ incident.title }}</p>
 {% cal %}
+{% if perms.gin.can_close_incident %}
+	<a href='./close'>Закрыть заявку</a> 
+{% endif %} 
+
+<form method="POST">
 {% if perms.gin.can_view_all %}
-	THIS IS A ADMIN.
+	Статус:{{ form.status }}
 {% endif %} 
 {{ form.as_p }}
+<input type="submit" value="Сохранить" name="Submit" />
+</form>
 {% endblock %}

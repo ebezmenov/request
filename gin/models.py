@@ -7,9 +7,10 @@ from django.contrib.auth.models import User
 from django.db.models import permalink
 from datetime import datetime
 
-STATUS_CHOICES = (('1','New'),
-    ('2','Close'),
+STATUS_CHOICES = (('1','Новый'),
     ('3','В работе'),
+    ('4','Отменено'),
+    ('5','Решение невозможно'),
 )
 
 # Create your models here.
@@ -56,6 +57,7 @@ class Incident(models.Model):
     class Meta:
         permissions = (
         ("can_view_all","могут видеть все"),
+        ('can_close_incident','Могут закрывать инциденты')
         )
 
     def __unicode__(self):

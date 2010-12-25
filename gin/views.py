@@ -4,13 +4,16 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from hcb.gin.models import BlogPost, Incident, FormIncident
-from hcb.gin.forms import ClientForm
+from hcb.gin.forms import FormIncidentEdit
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.db.models import Q
 # Create your views here.
 
 def user_is_staff(user):
     return user.is_staff
+
+def user_can_closed(user):
+    return user.has_perm('gin.can_close_incident')
 
 def archive(request):
     posts = BlogPost.objects.all()
@@ -63,5 +66,18 @@ def incident_detail_view(request, incident_id):
 
 def incident_detail(request, incident_id):
     incident = get_object_or_404(Incident, pk = incident_id )
-    form = FormIncident(instance=incident)
+    if request.method == 'POST':
+        form = FormIncidentEdit(request.POST, instance=incident)
+        if form.is_valid():
+            print form.cleaned_data['status']
+            form.save()
+    else:
+        form = FormIncidentEdit(instance=incident)
     return render_to_response("detail.html", {'incident':incident, 'form':form },context_instance=RequestContext(request))
+
+@user_passes_test(user_can_closed)
+def incident_closed(request, incident_id):
+    incident = get_object_or_404(Incident, pk = incident_id )
+    incident.status = '2' # ставим статус закрытия инцидента
+    incident.save()
+    return HttpResponseRedirect(reverse('incident_detail', args=[incident.id]))
