@@ -54,13 +54,13 @@ def new_incident(request):
 
 def list_incident(request):
     pass
-@user_passes_test(user_is_staff)
+
 def incident_detail_view(request, incident_id):
     incident = get_object_or_404(Incident, pk = incident_id )
     form = FormIncident(instance=incident)
     return render_to_response("view_detail.html", {'incident':incident, 'form':form },context_instance=RequestContext(request))
 
-@user_passes_test(user_is_staff)
+
 def incident_detail(request, incident_id):
     incident = get_object_or_404(Incident, pk = incident_id )
     form = FormIncident(instance=incident)

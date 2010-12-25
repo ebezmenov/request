@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from django.db import models
+from django import forms
 from django.forms import ModelForm
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -70,6 +71,7 @@ class FormIncident(ModelForm):
      class Meta:
         model = Incident
         exclude = ('author','client', 'status')
+
 
 #fgfdg
 admin.site.register(Incident)

@@ -3,6 +3,8 @@
 {% block content %}
 <p>Title: {{ incident.title }}</p>
 {% cal %}
-<table>{{ form }}</table>
-
+{% if perms.gin.can_view_all %}
+	THIS IS A ADMIN.
+{% endif %} 
+{{ form.as_p }}
 {% endblock %}
