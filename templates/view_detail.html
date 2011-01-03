@@ -3,10 +3,18 @@
 {% block content %}
 <p>Title: {{ incident.title }}</p>
 {% cal %}
-Автор:{{ incident.author }}
+Автор:{{ incident.author }}<br />
 Статус: {{ incident.status }}
+{% if perms.gin.can_close_incident %}
+	<div><a href='./close'>Закрыть заявку</a> </div>
+{% endif %} 
 <form action="edit" method="" accept-charset="utf-8">
 	<p><input type="submit" value="Редактировать" /></p>
 </form>
-
+{% for solution in sol %}
+	{{solution.timestamp|date:"jS F Y H:i" }} :{{ solution.author }} - {{ solution.text }}  <br />
+{% endfor %}
+{% if perms.gin.add_solution %}
+	<a href='{% url gin.views.add_solution incident.id %}'>Добавить решение</a>
+{% endif %}
 {% endblock %}

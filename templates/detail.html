@@ -8,10 +8,17 @@
 {% endif %} 
 
 <form method="POST">
-{% if perms.gin.can_view_all %}
-	Статус:{{ form.status }}
-{% endif %} 
-{{ form.as_p }}
-<input type="submit" value="Сохранить" name="Submit" />
+	{% if perms.gin.can_view_all %}
+		<strong>Статус:</strong>{{ form.status }}
+	{% endif %} 
+	{{ form.as_p }}
+	<input type="submit" value="Сохранить" name="Submit" />
 </form>
+{% if perms.gin.add_solution %}
+	<a href='{% url gin.views.add_solution incident.id %}'>Добавить решение</a>
+	<form action='{% url gin.views.add_solution incident.id %}' method="POST">
+		{{ sol.as_p }}
+		<input type="submit" value="Добавить решение" name="Submit" />
+	</form>
+{% endif %}
 {% endblock %}

@@ -2,9 +2,6 @@
 {% block content %}
 <h1> Новая заявка</h1>
 <form method="POST">
-	{% if user.is_staff %}
-	STAFF {{ form.status }}
-	{% endif %} 
     {{ form.as_p }}
     {{ form_client.as_p }}
     <input type="submit" value="Сохранить" name="Submit" />

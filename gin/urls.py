@@ -11,6 +11,7 @@ urlpatterns = patterns('hcb.gin.views',
     url(r'incident/(\d+)/$','incident_detail_view',name='incident_detail'),
     url(r'incident/(\d+)/edit$','incident_detail',name='incident_view'),
     url(r'incident/(\d+)/close$','incident_closed',name='incident_closed'),
+    url(r'incident/(\d+)/add_sol$','add_solution',name='solution_add'),
     url(r'new/$','new_incident', name='new_incident'),
 )
 info_dic = {'queryset': Incident.objects.all(), 'template_name':'list.html'}

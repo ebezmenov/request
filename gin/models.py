@@ -13,20 +13,6 @@ STATUS_CHOICES = (('1','Новый'),
     ('5','Решение невозможно'),
 )
 
-# Create your models here.
-class BlogPost(models.Model):
-    title = models.CharField(max_length=50)
-    body = models.TextField()
-    timestamp = models.DateTimeField()
-    class Meta:
-        ordering = ('-timestamp',)
-
-class BlogPostAdmin(admin.ModelAdmin):
-    """Class for me"""
-    list_display = ('title', 'timestamp')
-
-admin.site.register(BlogPost, BlogPostAdmin)
-
 class EmployeeProfile(models.Model):
     user = models.ForeignKey(User, unique = True)
     departament = models.CharField(max_length=50)
@@ -47,7 +33,7 @@ class ClientAdmin(admin.ModelAdmin):
 admin.site.register(Client, ClientAdmin)
 
 class Incident(models.Model):
-    timestamp = models.DateField(auto_now_add = True)
+    timestamp = models.DateTimeField(auto_now_add = True)
     title = models.CharField(max_length=50)
     client = models.ForeignKey(Client)
     author = models.ForeignKey(User)
@@ -62,6 +48,7 @@ class Incident(models.Model):
 
     def __unicode__(self):
         return self.title
+    
     @permalink
     def get_absolute_url(self):
         return ('incident_detail',[str(self.id)])
@@ -69,11 +56,16 @@ class Incident(models.Model):
     def get_list_resp(self):
         return self.responsibles.all()
 
-class FormIncident(ModelForm):
-     class Meta:
-        model = Incident
-        exclude = ('author','client', 'status')
+class Solution(models.Model):
+#Class Solution 
+    author = models.ForeignKey(User)
+    incident = models.ForeignKey(Incident)
+    timestamp = models.DateTimeField(auto_now_add = True)
+    text = models.CharField('Решение',max_length=150)
+    
+    def __unicode__(self):
+        return str(self.author) + self.text
+    
 
-
-#fgfdg
 admin.site.register(Incident)
+admin.site.register(Solution)
