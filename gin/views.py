@@ -87,15 +87,12 @@ def incident_closed(request, incident_id):
 def add_solution(request, incident_id):
     incident = get_object_or_404(Incident, pk = incident_id )
     if request.method == 'POST':
-        # FIXME:  Make a form 
-        print 'sss'
+#TODO:  Make a form 
         solution_form = FormSolution(request.POST)
         if solution_form.is_valid():
             solution = solution_form.save(commit=False)
             solution.author = request.user
             solution.incident = incident
-            print solution.author
-            print solution.id
             solution.save()
             return HttpResponseRedirect(reverse('incident_detail', args=[incident.id]))
     else:

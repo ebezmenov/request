@@ -20,11 +20,19 @@ class EmployeeProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'departament')
 admin.site.register(EmployeeProfile,EmployeeProfileAdmin)
 
+class FormAppeal(models.Model):
+    name = models.CharField('Форма обращения', max_length=20)
+    def __unicode__(self):
+        return "%s" % self.name
+    
+admin.site.register(FormAppeal)
+    
 class Client(models.Model):
     first = models.CharField('Имя',max_length=50)
     last = models.CharField("Фамилия" ,max_length=50)
     middle_name =models.CharField('Отчество', max_length=50) 
-    inn = models.DecimalField('INN', max_digits=10, decimal_places=0)
+    inn = models.DecimalField('ИНН', max_digits=10, decimal_places=0, blank= True, null=True)
+    agreement = models.CharField('Договор', max_length=30, blank=True)
     def __unicode__(self):
         return self.first+" "+self.last
     
@@ -40,6 +48,7 @@ class Incident(models.Model):
     responsibles = models.ManyToManyField(User, related_name='respons')
     status = models.CharField(max_length=1,choices=STATUS_CHOICES, default='1')
     incoming_number = models.CharField('Входящий номер', max_length=20)
+    form_appeal = models.ForeignKey(FormAppeal)
     class Meta:
         permissions = (
         ("can_view_all","могут видеть все"),
