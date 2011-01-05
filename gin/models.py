@@ -1,17 +1,17 @@
 #-*- coding: utf-8 -*-
 from django.db import models
-from django import forms
-from django.forms import ModelForm
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db.models import permalink
-from datetime import datetime
 
 STATUS_CHOICES = (('1','Новый'),
     ('3','В работе'),
     ('4','Отменено'),
     ('5','Решение невозможно'),
 )
+REGION_UKRAINE = ((1,'Киевская'),
+                  (2,'Днепропетровская')
+                  )
 
 class EmployeeProfile(models.Model):
     user = models.ForeignKey(User, unique = True)
@@ -33,6 +33,10 @@ class Client(models.Model):
     middle_name =models.CharField('Отчество', max_length=50) 
     inn = models.DecimalField('ИНН', max_digits=10, decimal_places=0, blank= True, null=True)
     agreement = models.CharField('Договор', max_length=30, blank=True)
+    region = models.IntegerField('Область', choices = REGION_UKRAINE, default='1')
+    city = models.CharField('Город', max_length=30, blank=True)
+    adres = models.CharField('Адрес', max_length=50, blank=True)
+    postal_code = models.IntegerField('Индекс', blank = True, null=False, default = 0)
     def __unicode__(self):
         return self.first+" "+self.last
     
