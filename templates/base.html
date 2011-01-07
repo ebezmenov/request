@@ -24,6 +24,7 @@ and open the template in the editor.
           <a href="{% url new_incident %}">Создать новую заявку 2</a>
           <a href="{% url list_inc %}">Журнал заявок</a>
           <a href="{% url logout %}"> Выйти </a>
+          <img src="{{ MEDIA_URL }}img/winter.jpg" />
       </div>
       {% block content %}
       {% endblock %}

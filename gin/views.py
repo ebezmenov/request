@@ -1,10 +1,10 @@
 #-*- coding: utf-8 -*-
-from django.template import loader, Context, RequestContext
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from hcb.gin.models import Incident
-from hcb.gin.forms import FormIncidentEdit, FormClient, FormSolution
+from hcb.gin.forms import FormIncidentEdit, FormClient, FormSolution, FormAttachment
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.db.models import Q
 # Create your views here.
@@ -14,12 +14,6 @@ def user_is_staff(user):
 
 def user_can_closed(user):
     return user.has_perm('gin.can_close_incident')
-
-def archive(request):
-    posts = BlogPost.objects.all()
-    t = loader.get_template('archive.html')
-    c = Context({'posts': posts})
-    return HttpResponse(t.render(c))
 
 @login_required
 def index(request):
@@ -52,7 +46,6 @@ def new_incident(request):
     else:
         form = FormIncidentEdit(initial={'title':'название темы'})
         form_client = FormClient()
-    #form.author = request.user
     return render_to_response("new_inc.html", {'form':form, 'form_client':form_client }, context_instance=RequestContext(request))
 
 def list_incident(request):
@@ -75,7 +68,8 @@ def incident_detail(request, incident_id):
             return render_to_response("view_detail.html", {'incident':incident, 'form':form, 'sol': sol },context_instance=RequestContext(request))
     else:
         form = FormIncidentEdit(instance=incident)
-    return render_to_response("detail.html", {'incident':incident, 'form':form },context_instance=RequestContext(request))
+        attachment = FormAttachment()
+    return render_to_response("detail.html", {'incident':incident, 'form':form, 'attachment':attachment },context_instance=RequestContext(request))
 
 @user_passes_test(user_can_closed)
 def incident_closed(request, incident_id):
@@ -98,3 +92,13 @@ def add_solution(request, incident_id):
     else:
         solution = FormSolution()
     return render_to_response("detail.html", {'incident':incident, 'sol':solution },context_instance=RequestContext(request))
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = FormAttachment(request.POST, request.FILES)
+        if form.is_valid():
+            #handle_uploaded_file(request.FILES['file'])
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = FormAttachment()
+    return HttpResponseRedirect(reverse('list_inc'))

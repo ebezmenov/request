@@ -24,9 +24,8 @@ class FormAppeal(models.Model):
     name = models.CharField('Форма обращения', max_length=20)
     def __unicode__(self):
         return "%s" % self.name
-    
 admin.site.register(FormAppeal)
-    
+
 class Client(models.Model):
     first = models.CharField('Имя',max_length=50)
     last = models.CharField("Фамилия" ,max_length=50)
@@ -53,6 +52,7 @@ class Incident(models.Model):
     status = models.CharField(max_length=1,choices=STATUS_CHOICES, default='1')
     incoming_number = models.CharField('Входящий номер', max_length=20)
     form_appeal = models.ForeignKey(FormAppeal)
+    data_answer_client = models.DateField('Дата ответа', blank = True, null=True)
     class Meta:
         permissions = (
         ("can_view_all","могут видеть все"),
@@ -79,6 +79,14 @@ class Solution(models.Model):
     def __unicode__(self):
         return str(self.author) + self.text
     
-
+class Attachment(models.Model):
+    slug = models.CharField('Описание', max_length=80)
+    file_document = models.FileField(upload_to='upload_doc/')
+    incident = models.ForeignKey(Incident)
+    
+    def __unicode__(self):
+        return '%s' % self.slug
+    
+admin.site.register(Attachment)
 admin.site.register(Incident)
 admin.site.register(Solution)
