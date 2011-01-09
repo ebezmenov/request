@@ -1,0 +1,6 @@
+     body { color:#efd; background:#453; padding: 0 5em; margin: 0}
+     h1 { padding: 1em 1em; background:#675}
+     h2 { color:#bf8; border-top: 1px dotted #eff; margin-top:2em; }
+     #menu { margin: 1em; }
+     a:hover { background:green; }
+     div a { color: red; padding: 1em;}

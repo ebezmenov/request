@@ -9,7 +9,7 @@ STATUS_CHOICES = (('1','New'),
     ('5','Отменено'),
 )
 class FormIncidentEdit(ModelForm):
-    data_answer_client = forms.DateField(required=False)
+#    data_answer_client = forms.DateField(required=False)
     class Meta:
         model = Incident
         exclude = ('author','client')

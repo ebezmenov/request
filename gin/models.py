@@ -13,6 +13,8 @@ REGION_UKRAINE = ((1,'Киевская'),
                   (2,'Днепропетровская')
                   )
 
+CATEGORY = ((0,'Кадровые вопросы'),
+            (1,'Жалобы на качество работы подразделения'))
 class EmployeeProfile(models.Model):
     user = models.ForeignKey(User, unique = True)
     departament = models.CharField(max_length=50)
@@ -25,6 +27,13 @@ class FormAppeal(models.Model):
     def __unicode__(self):
         return "%s" % self.name
 admin.site.register(FormAppeal)
+
+class Category(models.Model):
+    subcatagory = models.CharField('Подкатегория',max_length=100, blank = True)
+    def __unicode__(self):
+        return '%s' % self.subcatagory
+
+admin.site.register(Category)
 
 class Client(models.Model):
     first = models.CharField('Имя',max_length=50)
@@ -45,14 +54,15 @@ admin.site.register(Client, ClientAdmin)
 
 class Incident(models.Model):
     timestamp = models.DateTimeField(auto_now_add = True)
-    title = models.CharField(max_length=50)
+    title = models.CharField('Обращение',max_length=50)
     client = models.ForeignKey(Client)
     author = models.ForeignKey(User)
     responsibles = models.ManyToManyField(User, related_name='respons')
-    status = models.CharField(max_length=1,choices=STATUS_CHOICES, default='1')
+    status = models.CharField('Статус', max_length=1,choices=STATUS_CHOICES, default='1')
     incoming_number = models.CharField('Входящий номер', max_length=20)
-    form_appeal = models.ForeignKey(FormAppeal)
-    data_answer_client = models.DateField('Дата ответа', blank = True, null=True)
+    form_appeal = models.ForeignKey(FormAppeal, blank = True)
+    data_answer_client = models.DateField('Дата ответа клиенту', blank = True, null=True)
+    category = models.ForeignKey(Category, blank = True, null=True)
     class Meta:
         permissions = (
         ("can_view_all","могут видеть все"),
@@ -86,6 +96,7 @@ class Attachment(models.Model):
     
     def __unicode__(self):
         return '%s' % self.slug
+
     
 admin.site.register(Attachment)
 admin.site.register(Incident)

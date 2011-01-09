@@ -44,7 +44,7 @@ def new_incident(request):
                 form.save_m2m()
                 return HttpResponseRedirect(reverse('list_inc'))
     else:
-        form = FormIncidentEdit(initial={'title':'название темы'})
+        form = FormIncidentEdit(initial={'Суть обращение':'название темы'})
         form_client = FormClient()
     return render_to_response("new_inc.html", {'form':form, 'form_client':form_client }, context_instance=RequestContext(request))
 

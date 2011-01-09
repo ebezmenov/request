@@ -7,24 +7,23 @@ and open the template in the editor.
   <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type='text/javascript' src='{{ MEDIA_URL }}js/mootools-1.2.5-core-yc.js'></script>
+    <link rel='stylesheet' href='{{ MEDIA_URL}}/css/common.css' />
   </head>
-  <style type="text/css">
-      body { color:#efd; background:#453; padding: 0 5em; margin: 0}
-      h1 { padding: 2em 3em; background:#675}
-      h2 { color:#bf8; border-top: 1px dotted #eff; margin-top:2em; }
-      #menu { margin: 1em; }
-      a:hover { background:green; }
-      div a { color: red; padding: 1em;}
-  </style>
   <body>
-      <h1> HCB 'REQUEST'</h1>
-      hii {{ user.username }}
+    <script type='text/javascript'> 
+      document.addEvent('domready', function(){
+        $('my-link').addEvent('click', function (){
+            alert('dddd');})
+      })
+    </script>
+      <h1> Homecreditbank 'REQUEST'</h1>
+      <div id="my-link"> hii {{ user.username }}</div>      
       <div id="menu">
           <a href="{% url add_inc %}">Создать новую заявку </a>
           <a href="{% url new_incident %}">Создать новую заявку 2</a>
           <a href="{% url list_inc %}">Журнал заявок</a>
           <a href="{% url logout %}"> Выйти </a>
-          <img src="{{ MEDIA_URL }}img/winter.jpg" />
       </div>
       {% block content %}
       {% endblock %}
