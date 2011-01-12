@@ -21,7 +21,7 @@
 		<input type="submit" value="Добавить решение" name="Submit" />
 	</form>
 {% endif %}
-<a href='{% url gin.views.add_attachmet incident.id %}'>Добавить вложение</a>
+<a href='{% url gin.views.upload_file incident.id %}'>Добавить вложение</a>
 <form method='POST' enctype="multipart/form-data" action='add_attach'>
   Вложения :
   {{ attachment.as_p }}

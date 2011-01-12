@@ -4,3 +4,11 @@
      #menu { margin: 1em; }
      a:hover { background:green; }
      div a { color: red; padding: 1em;}
+     
+     #my-link { position:fixed;
+      top:0 px;
+      right: 10px;
+      border: solid;
+      background-color: #BBFF88;
+      color:#c0c0c0;
+     }
